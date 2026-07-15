@@ -1,0 +1,11 @@
+basePath: /v2
+host: f4b1.dev/clicker-backend
+info:
+  contact:
+    email: hello@f4b1.dev
+    name: Fabian
+  description: Clicker Backend in Golang
+  title: Clicker Backend
+  version: "1.0"
+paths: {}
+swagger: "2.0"

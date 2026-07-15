@@ -1,0 +1,15 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Clicker Backend in Golang",
+        "title": "Clicker Backend",
+        "contact": {
+            "name": "Fabian",
+            "email": "hello@f4b1.dev"
+        },
+        "version": "1.0"
+    },
+    "host": "f4b1.dev/clicker-backend",
+    "basePath": "/v2",
+    "paths": {}
+}
