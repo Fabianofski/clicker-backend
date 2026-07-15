@@ -1,5 +1,4 @@
-basePath: /v2
-host: f4b1.dev/clicker-backend
+basePath: /api
 info:
   contact:
     email: hello@f4b1.dev
@@ -7,5 +6,75 @@ info:
   description: Clicker Backend in Golang
   title: Clicker Backend
   version: "1.0"
-paths: {}
+paths:
+  /game/state:
+    get:
+      description: Get current Game State
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: User Game State
+      tags:
+      - Game
+  /leaderboard:
+    get:
+      description: Get current Leaderboard Ranking
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: State
+      tags:
+      - Leaderboard
+  /store/purchase:
+    post:
+      description: Get current Store State
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Purchase a specific Building
+      tags:
+      - Store
+  /users/delete:
+    delete:
+      description: Delete your account and all your data
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "404":
+          description: not found
+          schema:
+            type: string
+      summary: Delete Account
+      tags:
+      - Users
+  /users/login:
+    post:
+      description: Login with email and password
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Login
+      tags:
+      - Users
+  /users/signup:
+    post:
+      description: Signup with email and password
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: SignUp
+      tags:
+      - Users
 swagger: "2.0"

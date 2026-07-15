@@ -17,14 +17,123 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/game/state": {
+            "get": {
+                "description": "Get current Game State",
+                "tags": [
+                    "Game"
+                ],
+                "summary": "User Game State",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/leaderboard": {
+            "get": {
+                "description": "Get current Leaderboard Ranking",
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "State",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/store/purchase": {
+            "post": {
+                "description": "Get current Store State",
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Purchase a specific Building",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/delete": {
+            "delete": {
+                "description": "Delete your account and all your data",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete Account",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Login with email and password",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/signup": {
+            "post": {
+                "description": "Signup with email and password",
+                "tags": [
+                    "Users"
+                ],
+                "summary": "SignUp",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "f4b1.dev/clicker-backend",
-	BasePath:         "/v2",
+	Host:             "",
+	BasePath:         "/api",
 	Schemes:          []string{},
 	Title:            "Clicker Backend",
 	Description:      "Clicker Backend in Golang",
