@@ -1,8 +1,43 @@
 basePath: /api
+definitions:
+  handlers.LoginRequest:
+    properties:
+      email:
+        example: johndoe@example.com
+        type: string
+      password:
+        example: password
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handlers.LoginResponse:
+    properties:
+      token:
+        example: token
+        type: string
+    required:
+    - token
+    type: object
+  handlers.SignUpRequest:
+    properties:
+      email:
+        example: johndoe@example.com
+        type: string
+      password:
+        example: password
+        type: string
+      username:
+        example: username
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
 info:
-  contact:
-    email: hello@f4b1.dev
-    name: Fabian
+  contact: {}
   description: Clicker Backend in Golang
   title: Clicker Backend
   version: "1.0"
@@ -15,6 +50,8 @@ paths:
           description: ok
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: User Game State
       tags:
       - Game
@@ -37,6 +74,8 @@ paths:
           description: ok
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Purchase a specific Building
       tags:
       - Store
@@ -52,15 +91,36 @@ paths:
           description: not found
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete Account
       tags:
       - Users
   /users/login:
     post:
+      consumes:
+      - application/json
       description: Login with email and password
+      parameters:
+      - description: login information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LoginRequest'
+      produces:
+      - application/json
       responses:
         "200":
-          description: ok
+          description: Success
+          schema:
+            $ref: '#/definitions/handlers.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
           schema:
             type: string
       summary: Login
@@ -68,13 +128,34 @@ paths:
       - Users
   /users/signup:
     post:
+      consumes:
+      - application/json
       description: Signup with email and password
+      parameters:
+      - description: sign up information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignUpRequest'
+      produces:
+      - application/json
       responses:
         "200":
-          description: ok
+          description: Success
+          schema:
+            type: string
+        "400":
+          description: Bad Request
           schema:
             type: string
       summary: SignUp
       tags:
       - Users
+securityDefinitions:
+  BearerAuth:
+    description: Authenticate with /api/users/login endpoint and paste token here
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

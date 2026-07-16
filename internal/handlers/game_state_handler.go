@@ -19,6 +19,7 @@ func NewGameHandler() *GameHandler {
 // @Tags			Game
 // @Description	Get current Game State
 // @Success		200	{string}	{models.GameState}	"ok"
+// @Security		BearerAuth
 // @Router			/game/state [get]
 func (g *GameHandler) GetGameState(w http.ResponseWriter, r *http.Request) {
 	return

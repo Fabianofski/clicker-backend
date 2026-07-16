@@ -4,6 +4,7 @@ import (
 	"context"
 	"log/slog"
 	"net/http"
+	"os"
 
 	_ "f4b1.dev/clicker-backend/docs"
 	"f4b1.dev/clicker-backend/ent"
@@ -17,7 +18,11 @@ import (
 //	@version		1.0
 //	@description	Clicker Backend in Golang
 
-// @BasePath	/api
+// @BasePath					/api
+// @securityDefinitions.apikey	BearerAuth
+// @in							header
+// @name						Authorization
+// @description				Authenticate with /api/users/login endpoint and paste token here
 func main() {
 	client, err := ent.Open("sqlite3", "./clicker.sqlite?cache=shared&_fk=1")
 	if err != nil {
@@ -29,13 +34,15 @@ func main() {
 		slog.Error("failed creating schema resources:", err)
 	}
 
+	jwtSecret := os.Getenv("JWT_SECRET")
+
 	entUserRepo := repository.NewEntUserRepository(client)
-	userService := service.NewUserService(entUserRepo)
+	userService := service.NewUserService(entUserRepo, jwtSecret)
 	buildingService, err := service.NewBuildingService()
 	if err != nil {
 		panic(err)
 	}
-	slog.Info("Buildings from csv: ", buildingService.Buildings)
+	slog.Info("Buildings from csv", "buldings", buildingService.Buildings)
 
 	r := router.New(userService)
 	http.ListenAndServe(":3000", r)

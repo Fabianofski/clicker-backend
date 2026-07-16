@@ -19,6 +19,7 @@ func NewStoreHandler() *StoreHandler {
 // @Tags			Store
 // @Description	Get current Store State
 // @Success		200	{string}	{models.StoreState}	"ok"
+// @Security		BearerAuth
 // @Router			/store/purchase [Post]
 func (g *StoreHandler) Purchase(w http.ResponseWriter, r *http.Request) {
 	return
