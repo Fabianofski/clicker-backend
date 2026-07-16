@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"os"
 
 	"f4b1.dev/clicker-backend/internal/handlers"
 	"f4b1.dev/clicker-backend/internal/middleware"
@@ -23,29 +24,36 @@ func New(userService *service.UserService) *chi.Mux {
 	})
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
+	jwt_secret := os.Getenv("JWT_SECRET")
+	userHandler := handlers.NewUserHandler(userService, jwt_secret)
+
 	r.Group(func(r chi.Router) {
-		r.Use(middleware.Auth)
 		r.Route("/api", func(r chi.Router) {
 			r.Route("/users", func(r chi.Router) {
-				userHandler := handlers.NewUserHandler(userService)
 				r.Post("/signup", userHandler.SignUp)
 				r.Post("/login", userHandler.Login)
-				r.Delete("/delete", userHandler.DeleteAccount)
+				r.Group(func(r chi.Router) {
+					r.Use(middleware.JWTMiddleware(jwt_secret))
+					r.Delete("/delete", userHandler.DeleteAccount)
+				})
 			})
-
 			r.Route("/leaderboard", func(r chi.Router) {
 				leaderboardHandler := handlers.NewLeaderboardHandler()
 				r.Get("/", leaderboardHandler.GetLeaderboard)
 			})
 
-			r.Route("/game", func(r chi.Router) {
-				gameHandler := handlers.NewGameHandler()
-				r.Get("/state", gameHandler.GetGameState)
-			})
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.JWTMiddleware(jwt_secret))
 
-			r.Route("/store", func(r chi.Router) {
-				storeHandler := handlers.NewStoreHandler()
-				r.Post("/purchase", storeHandler.Purchase)
+				r.Route("/game", func(r chi.Router) {
+					gameHandler := handlers.NewGameHandler()
+					r.Get("/state", gameHandler.GetGameState)
+				})
+
+				r.Route("/store", func(r chi.Router) {
+					storeHandler := handlers.NewStoreHandler()
+					r.Post("/purchase", storeHandler.Purchase)
+				})
 			})
 		})
 	})

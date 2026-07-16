@@ -6,9 +6,12 @@ require (
 	entgo.io/ent v0.14.6
 	github.com/go-chi/chi/v5 v5.3.1
 	github.com/gocarina/gocsv v0.0.0-20260628180327-50907998929c
+	github.com/golang-jwt/jwt/v5 v5.3.1
+	github.com/google/uuid v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.48
 	github.com/swaggo/http-swagger/v2 v2.0.2
 	github.com/swaggo/swag v1.16.6
+	golang.org/x/crypto v0.0.0-20220517005047-85d78b3ac167
 )
 
 require (
@@ -29,7 +32,6 @@ require (
 	github.com/go-openapi/swag/typeutils v0.27.0 // indirect
 	github.com/go-openapi/swag/yamlutils v0.27.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.18.1 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/rogpeppe/go-internal v1.15.0 // indirect

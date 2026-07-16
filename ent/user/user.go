@@ -15,6 +15,8 @@ const (
 	FieldEmail = "email"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// FieldPwHash holds the string denoting the pwhash field in the database.
+	FieldPwHash = "pw_hash"
 	// Table holds the table name of the user in the database.
 	Table = "users"
 )
@@ -24,6 +26,7 @@ var Columns = []string{
 	FieldID,
 	FieldEmail,
 	FieldName,
+	FieldPwHash,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -52,4 +55,9 @@ func ByEmail(opts ...sql.OrderTermOption) OrderOption {
 // ByName orders the results by the name field.
 func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
+}
+
+// ByPwHash orders the results by the pwHash field.
+func ByPwHash(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPwHash, opts...).ToFunc()
 }

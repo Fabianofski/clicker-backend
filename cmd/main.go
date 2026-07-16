@@ -21,7 +21,7 @@ import (
 func main() {
 	client, err := ent.Open("sqlite3", "./clicker.sqlite?cache=shared&_fk=1")
 	if err != nil {
-		slog.Error("failed opening connection to sqlite: %v", err)
+		slog.Error("failed opening connection to sqlite:", err)
 	}
 	defer client.Close()
 	ctx := context.Background()

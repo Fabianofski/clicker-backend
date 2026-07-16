@@ -5,50 +5,51 @@ package user
 import (
 	"entgo.io/ent/dialect/sql"
 	"f4b1.dev/clicker-backend/ent/predicate"
+	"github.com/google/uuid"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int) predicate.User {
+func ID(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int) predicate.User {
+func IDEQ(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int) predicate.User {
+func IDNEQ(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int) predicate.User {
+func IDIn(ids ...uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int) predicate.User {
+func IDNotIn(ids ...uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int) predicate.User {
+func IDGT(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int) predicate.User {
+func IDGTE(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int) predicate.User {
+func IDLT(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int) predicate.User {
+func IDLTE(id uuid.UUID) predicate.User {
 	return predicate.User(sql.FieldLTE(FieldID, id))
 }
 
@@ -60,6 +61,11 @@ func Email(v string) predicate.User {
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldName, v))
+}
+
+// PwHash applies equality check predicate on the "pwHash" field. It's identical to PwHashEQ.
+func PwHash(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldPwHash, v))
 }
 
 // EmailEQ applies the EQ predicate on the "email" field.
@@ -190,6 +196,71 @@ func NameEqualFold(v string) predicate.User {
 // NameContainsFold applies the ContainsFold predicate on the "name" field.
 func NameContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldName, v))
+}
+
+// PwHashEQ applies the EQ predicate on the "pwHash" field.
+func PwHashEQ(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldPwHash, v))
+}
+
+// PwHashNEQ applies the NEQ predicate on the "pwHash" field.
+func PwHashNEQ(v string) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldPwHash, v))
+}
+
+// PwHashIn applies the In predicate on the "pwHash" field.
+func PwHashIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldIn(FieldPwHash, vs...))
+}
+
+// PwHashNotIn applies the NotIn predicate on the "pwHash" field.
+func PwHashNotIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldPwHash, vs...))
+}
+
+// PwHashGT applies the GT predicate on the "pwHash" field.
+func PwHashGT(v string) predicate.User {
+	return predicate.User(sql.FieldGT(FieldPwHash, v))
+}
+
+// PwHashGTE applies the GTE predicate on the "pwHash" field.
+func PwHashGTE(v string) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldPwHash, v))
+}
+
+// PwHashLT applies the LT predicate on the "pwHash" field.
+func PwHashLT(v string) predicate.User {
+	return predicate.User(sql.FieldLT(FieldPwHash, v))
+}
+
+// PwHashLTE applies the LTE predicate on the "pwHash" field.
+func PwHashLTE(v string) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldPwHash, v))
+}
+
+// PwHashContains applies the Contains predicate on the "pwHash" field.
+func PwHashContains(v string) predicate.User {
+	return predicate.User(sql.FieldContains(FieldPwHash, v))
+}
+
+// PwHashHasPrefix applies the HasPrefix predicate on the "pwHash" field.
+func PwHashHasPrefix(v string) predicate.User {
+	return predicate.User(sql.FieldHasPrefix(FieldPwHash, v))
+}
+
+// PwHashHasSuffix applies the HasSuffix predicate on the "pwHash" field.
+func PwHashHasSuffix(v string) predicate.User {
+	return predicate.User(sql.FieldHasSuffix(FieldPwHash, v))
+}
+
+// PwHashEqualFold applies the EqualFold predicate on the "pwHash" field.
+func PwHashEqualFold(v string) predicate.User {
+	return predicate.User(sql.FieldEqualFold(FieldPwHash, v))
+}
+
+// PwHashContainsFold applies the ContainsFold predicate on the "pwHash" field.
+func PwHashContainsFold(v string) predicate.User {
+	return predicate.User(sql.FieldContainsFold(FieldPwHash, v))
 }
 
 // And groups predicates with the AND operator between them.

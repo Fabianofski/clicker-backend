@@ -55,6 +55,20 @@ func (_u *UserUpdate) SetNillableName(v *string) *UserUpdate {
 	return _u
 }
 
+// SetPwHash sets the "pwHash" field.
+func (_u *UserUpdate) SetPwHash(v string) *UserUpdate {
+	_u.mutation.SetPwHash(v)
+	return _u
+}
+
+// SetNillablePwHash sets the "pwHash" field if the given value is not nil.
+func (_u *UserUpdate) SetNillablePwHash(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetPwHash(*v)
+	}
+	return _u
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_u *UserUpdate) Mutation() *UserMutation {
 	return _u.mutation
@@ -88,7 +102,7 @@ func (_u *UserUpdate) ExecX(ctx context.Context) {
 }
 
 func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUUID))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -101,6 +115,9 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.PwHash(); ok {
+		_spec.SetField(user.FieldPwHash, field.TypeString, value)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -146,6 +163,20 @@ func (_u *UserUpdateOne) SetName(v string) *UserUpdateOne {
 func (_u *UserUpdateOne) SetNillableName(v *string) *UserUpdateOne {
 	if v != nil {
 		_u.SetName(*v)
+	}
+	return _u
+}
+
+// SetPwHash sets the "pwHash" field.
+func (_u *UserUpdateOne) SetPwHash(v string) *UserUpdateOne {
+	_u.mutation.SetPwHash(v)
+	return _u
+}
+
+// SetNillablePwHash sets the "pwHash" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillablePwHash(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetPwHash(*v)
 	}
 	return _u
 }
@@ -196,7 +227,7 @@ func (_u *UserUpdateOne) ExecX(ctx context.Context) {
 }
 
 func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
-	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
+	_spec := sqlgraph.NewUpdateSpec(user.Table, user.Columns, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUUID))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "User.id" for update`)}
@@ -226,6 +257,9 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(user.FieldName, field.TypeString, value)
+	}
+	if value, ok := _u.mutation.PwHash(); ok {
+		_spec.SetField(user.FieldPwHash, field.TypeString, value)
 	}
 	_node = &User{config: _u.config}
 	_spec.Assign = _node.assignValues

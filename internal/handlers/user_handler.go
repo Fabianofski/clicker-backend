@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
+	"errors"
+	"log/slog"
 	"net/http"
 
 	"f4b1.dev/clicker-backend/internal/service"
@@ -10,7 +13,7 @@ type UserHandler struct {
 	service *service.UserService
 }
 
-func NewUserHandler(service *service.UserService) *UserHandler {
+func NewUserHandler(service *service.UserService, jwt_secret string) *UserHandler {
 	return &UserHandler{service: service}
 }
 
@@ -29,7 +32,18 @@ func (h *UserHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 // @Success		200	{string}	string	"ok"
 // @Router			/users/login [post]
 func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
-	return
+	token, err := h.service.Login(r.Context(), "email", "pass")
+	if err != nil {
+		if errors.Is(service.ErrInvalidCredentials, err) {
+			http.Error(w, "invalid email or Password.", http.StatusBadRequest)
+			return
+		}
+		slog.Error("Unexpected Error:", err)
+		http.Error(w, "internal server error", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }
 
 // @Summary		Delete Account
