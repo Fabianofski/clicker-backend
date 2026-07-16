@@ -29,6 +29,11 @@ func main() {
 	}
 	sqlUserRepo := repository.NewSQLUserRepository(db)
 	userService := service.NewUserService(sqlUserRepo)
+	buildingService, err := service.NewBuildingService()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(buildingService.Buildings)
 
 	r := router.New(userService)
 	http.ListenAndServe(":3000", r)

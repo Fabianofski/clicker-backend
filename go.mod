@@ -4,6 +4,7 @@ go 1.26.3
 
 require (
 	github.com/go-chi/chi/v5 v5.3.1
+	github.com/gocarina/gocsv v0.0.0-20260628180327-50907998929c
 	github.com/swaggo/http-swagger/v2 v2.0.2
 	github.com/swaggo/swag v1.16.6
 	modernc.org/sqlite v1.53.0

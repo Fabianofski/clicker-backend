@@ -1,8 +1,9 @@
 package models
 
 type Building struct {
-	Name        string
-	Description string
-	Price       int
-	Amount      int
+	Id          string `csv:"id"`
+	Tile        string `csv:"title"`
+	Description string `csv:"description"`
+	BasePrice   int    `csv:"base_price"`
+	Income      int    `csv:"income"`
 }
