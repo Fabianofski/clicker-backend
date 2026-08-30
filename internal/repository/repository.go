@@ -12,5 +12,5 @@ type UserRepository interface {
 	GetUserWithEmail(ctx context.Context, email string) (*ent.User, error)
 	GetUserWithUsername(ctx context.Context, username string) (*ent.User, error)
 	CreateUser(ctx context.Context, email string, username string, pwHash string) error
-	DeleteUser(ctx context.Context, id string) (*ent.User, error)
+	DeleteUser(ctx context.Context, userID uuid.UUID) error
 }

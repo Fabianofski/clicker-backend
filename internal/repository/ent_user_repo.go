@@ -74,6 +74,14 @@ func (r *EntUserRepository) CreateUser(ctx context.Context, email string, userna
 	return nil
 }
 
-func (r *EntUserRepository) DeleteUser(ctx context.Context, id string) (*ent.User, error) {
-	panic("unimplemented")
+func (r *EntUserRepository) DeleteUser(ctx context.Context, userID uuid.UUID) error {
+	_, err := r.db.User.Delete().Where(user.ID(userID)).Exec(ctx)
+	if err != nil {
+		slog.Error("deleting user failed", "error", err, "userID", userID)
+		if ent.IsNotFound(err) {
+			return ErrUserNotFound
+		}
+		return err
+	}
+	return nil
 }

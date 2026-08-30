@@ -45,6 +45,6 @@ func main() {
 	slog.Info("Buildings from csv", "buldings", buildingService.Buildings)
 
 	r := router.New(userService)
-	http.ListenAndServe(":3000", r)
 	slog.Info("Server listening on Port 3000")
+	http.ListenAndServe(":3000", r)
 }

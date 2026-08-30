@@ -5,10 +5,10 @@ import (
 	"errors"
 	"time"
 
-	"f4b1.dev/clicker-backend/ent"
 	"f4b1.dev/clicker-backend/internal/middleware"
 	"f4b1.dev/clicker-backend/internal/repository"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -86,6 +86,6 @@ func (u *UserService) Login(ctx context.Context, email string, password string) 
 	return tokenString, nil
 }
 
-func (u *UserService) DeleteAccount(ctx context.Context, email string, password string) (*ent.User, error) {
-	panic("unimplemented")
+func (u *UserService) DeleteAccount(ctx context.Context, userID uuid.UUID) error {
+	return u.userRepo.DeleteUser(ctx, userID)
 }

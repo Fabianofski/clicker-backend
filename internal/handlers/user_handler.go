@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"f4b1.dev/clicker-backend/internal/service"
+	"github.com/google/uuid"
 )
 
 type UserHandler struct {
@@ -104,5 +105,18 @@ func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
 // @Router			/users/delete [delete]
 // @Security		BearerAuth
 func (h *UserHandler) DeleteAccount(w http.ResponseWriter, r *http.Request) {
-	return
+	userID, ok := r.Context().Value("userID").(uuid.UUID)
+	if !ok {
+		http.Error(w, "Couldn't read UserID from Request.", http.StatusBadRequest)
+		return
+	}
+
+	err := h.service.DeleteAccount(r.Context(), userID)
+	if err != nil {
+		http.Error(w, "Couldn't delete user.", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode("Success")
 }
